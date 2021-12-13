@@ -1,7 +1,6 @@
 from aiogram import types
 from dispatcher import dp
 from handlers.parser import getData
-from handlers.parser import printJson
 import config
 
 
