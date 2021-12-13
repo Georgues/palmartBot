@@ -8,14 +8,14 @@ def getData():
     orders = 0
     total = 0
     wbtimeformatted = str(now.year) + '-' + str(now.month) + '-' + str(now.day) + 'T00:30:00.000Z'
+    response = requests.get('https://suppliers-stats.wildberries.ru/api/v1/supplier/orders',
+                            params={
+                                'dateFrom': wbtimeformatted,
+                                'flag': 1,
+                                'key': 'ODQ0MmFhMzgtMDg2Zi00NzFhLWE0NTMtY2RmMTk0Yzk4ZjIy'
+                            })
 
     try:
-        response = requests.get('https://suppliers-stats.wildberries.ru/api/v1/supplier/orders',
-                                params={
-                                    'dateFrom': wbtimeformatted,
-                                    'flag': 1,
-                                    'key': 'ODQ0MmFhMzgtMDg2Zi00NzFhLWE0NTMtY2RmMTk0Yzk4ZjIy'
-                                })
         data = response.json()
         status_code = response.status_code
 
@@ -45,4 +45,16 @@ def getData():
         print(e)
         return "Какая-то ебейшая ошибка, если не пройдет спустя 5 минут - чекни логи хироку"
 
-getData()
+
+# def printJson():
+#     wbtimeformatted = str(now.year) + '-' + str(now.month) + '-' + str(now.day) + 'T00:30:00.000Z'
+#     response = requests.get('https://suppliers-stats.wildberries.ru/api/v1/supplier/orders',
+#                             params={
+#                                 'dateFrom': wbtimeformatted,
+#                                 'flag': 1,
+#                                 'key': 'ODQ0MmFhMzgtMDg2Zi00NzFhLWE0NTMtY2RmMTk0Yzk4ZjIy'
+#                             })
+#
+#     data = response.json()
+#     print(data)
+#     return str(data)

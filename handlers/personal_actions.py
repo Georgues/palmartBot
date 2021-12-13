@@ -1,6 +1,8 @@
 from aiogram import types
 from dispatcher import dp
 from handlers.parser import getData
+from handlers.parser import printJson
+import config
 
 
 @dp.message_handler(commands=["start"])
@@ -28,7 +30,7 @@ async def return_id_command(message: types.Message):
         await message.answer("Биджо-бот болеет, если скоро не выздоровеет - чекайте логи")
 
 
-@dp.message_handler(commands=["getOrders"])
+@dp.message_handler(is_admin=True, commands=["getOrders"])
 async def return_id_command(message: types.Message):
     try:
         await message.answer(getData())
@@ -39,6 +41,14 @@ async def return_id_command(message: types.Message):
 # @dp.message_handler(commands=["getOrdersDetailed"])
 # async def return_id_command(message: types.Message):
 #     await message.answer(getData())
+
+
+# @dp.message_handler(is_admin=True, commands=["getCleanJson"])
+# async def return_id_command(message: types.Message):
+#     try:
+#         await message.answer(printJson())
+#     except:
+#         await message.answer("Биджо-бот болеет, если скоро не выздоровеет - чекайте логи")
 
 
 @dp.message_handler(commands=["help"])
