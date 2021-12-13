@@ -22,7 +22,7 @@ def getData():
         if status_code == 200:
             for order in data:
                 orders += 1
-                price = int(order["totalPrice"]) * int(order["discountPercent"]) / 100
+                price = int(order["totalPrice"]) * (100 - int(order["discountPercent"])) / 100
                 total += price
             answer = "Статистика на " + str(now.day) + "-" + str(now.month) + "-" + str(now.year) \
                      + "\nКоличество заказов за день: " + str(orders) \
