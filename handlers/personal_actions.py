@@ -1,6 +1,7 @@
 from aiogram import types
 from dispatcher import dp
-from handlers.parser import getData
+from handlers.parser import getOrders
+from handlers.parser import getOrdersDetailed
 import config
 
 
@@ -14,7 +15,7 @@ async def return_id_command(message: types.Message):
                  "/getOrdersDetailed (на этапе разработки) - детализированная информация по заказам\n" \
                  "Пока больше ничего не умею(("
         keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        buttons = ["/getOrders", "/getId", "/help"]
+        buttons = ["/getOrders", "/getOrdersDetailed", "/getId", "/help"]
         keyboard.add(*buttons)
         await message.answer(answer, reply_markup=keyboard)
     except:
@@ -32,14 +33,17 @@ async def return_id_command(message: types.Message):
 @dp.message_handler(is_admin=True, commands=["getOrders"])
 async def return_id_command(message: types.Message):
     try:
-        await message.answer(getData())
+        await message.answer(getOrders())
     except:
         await message.answer("Биджо-бот болеет, если скоро не выздоровеет - чекайте логи")
 
 
-# @dp.message_handler(commands=["getOrdersDetailed"])
-# async def return_id_command(message: types.Message):
-#     await message.answer(getData())
+@dp.message_handler(commands=["getOrdersDetailed"])
+async def return_id_command(message: types.Message):
+    try:
+        await message.answer(getOrdersDetailed())
+    except:
+        await message.answer("Биджо-бот болеет, если скоро не выздоровеет - чекайте логи")
 
 
 # @dp.message_handler(is_admin=True, commands=["getCleanJson"])
