@@ -1,5 +1,6 @@
 import requests
 import datetime
+import config
 
 
 def getData():
@@ -45,7 +46,7 @@ def getOrders():
         for order in data:
             orders += 1
             price = int(order["totalPrice"]) * (100 - int(order["discountPercent"])) / 100
-            total += price
+            total += int(price)
         answer = "Статистика на " + str(date.day) + "-" + str(date.month) + "-" + str(date.year) \
                  + "\nКоличество заказов за день: " + str(orders) \
                  + "\nСумма заказов за день: " + str(total) + 'руб.'
@@ -59,12 +60,9 @@ def getOrders():
 def getOrdersDetailed():
     data, success, date = getData()
     answer = ''
-    items = {'2011444477004':'Дозатор', '2009914145003':'Фотик голубой', '2009914234004':'Фотик розовый', '2008783268004':'Штопор красный',
-             '2007020176003':'Щетки для стекол', '2007020015005':'Мельница', '2007019712007':'Штопор черный', '2006969380007':'Лоток',
-             '2004297522007':'Швабра', '2004297824002':'Таз'}
-    ordersDetailed = {'2011444477004':0, '2009914145003':0, '2009914234004':0, '2008783268004':0,
-             '2007020176003':0, '2007020015005':0, '2007019712007':0, '2006969380007':0,
-             '2004297522007':0, '2004297824002':0}
+    ordersDetailed = {}
+    for item in config.items.keys():
+        ordersDetailed.update({item: 0})
 
     if success:
         orders = 0
@@ -72,25 +70,26 @@ def getOrdersDetailed():
         for order in data:
             orders += 1
             price = int(order["totalPrice"]) * (100 - int(order["discountPercent"])) / 100
-            total += price
+            total += int(price)
             answer = "Статистика на " + str(date.day) + "-" + str(date.month) + "-" + str(date.year) \
                  + "\nКоличество заказов за день: " + str(orders) \
                  + "\nСумма заказов за день: " + str(total) + 'руб.'
-            for item in items:
+            for item in config.items:
                 barcode = order['barcode']
                 if item == barcode:
                     ordersDetailed[barcode] += 1
     else:
         return data
 
-    answer += '\nДетализация заказов:\n'
+    answer += '\n\nДетализация заказов:\n'
 
     for item in ordersDetailed:
         if ordersDetailed[item] != 0:
-            answer += items[item] + ': ' + str(ordersDetailed[item]) + ' шт.\n'
+            answer += config.items[item] + ': ' + str(ordersDetailed[item]) + ' шт.\n'
 
     print(answer)
     return answer
+
 
 # def printJson():
 #     wbtimeformatted = str(now.year) + '-' + str(now.month) + '-' + str(now.day) + 'T00:30:00.000Z'
