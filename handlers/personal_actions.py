@@ -11,7 +11,7 @@ import config
 @dp.message_handler(commands=["start"])
 async def return_id_command(message: types.Message):
     try:
-        answer = "Приветствую, Биджо, я бот-темщик, вот че могу и умею: CHANGES\n" \
+        answer = "Приветствую, Биджо, я бот-темщик, вот че могу и умею: ИЗМЕНЕНИЯ\n" \
                  "/help - почитать список команд и прочую поеботу\n" \
                  "/getId - получить id твоего аккаунта (для фильтрации доступа)\n" \
                  "/getOrders - агрегированная информация о заказах на сегодня (сумма+количество)\n" \
