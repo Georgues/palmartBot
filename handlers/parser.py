@@ -22,7 +22,7 @@ def getData():
             return data, True, date
 
         elif status_code == 429:
-            answer = "Превышено количество допустимых запросов, чутка подожди"
+            answer = "Превышено количество допустимых запросов, подождите"
             print(answer)
             return answer, False, date
 
