@@ -59,7 +59,6 @@ def getOrders():
 
 def getOrdersDetailed():
     data, success, date = getData()
-    answer = ''
     ordersDetailed = {}
     for item in config.items.keys():
         ordersDetailed.update({item: 0})
@@ -71,24 +70,24 @@ def getOrdersDetailed():
             orders += 1
             price = int(order["totalPrice"]) * (100 - int(order["discountPercent"])) / 100
             total += int(price)
-            answer = "Статистика на " + str(date.day) + "-" + str(date.month) + "-" + str(date.year) \
-                 + "\nКоличество заказов за день: " + str(orders) \
-                 + "\nСумма заказов за день: " + str(total) + 'руб.'
+        answer = "Статистика на " + str(date.day) + "-" + str(date.month) + "-" + str(date.year) \
+             + "\nКоличество заказов за день: " + str(orders) \
+             + "\nСумма заказов за день: " + str(total) + 'руб.'
+
+        if orders > 0:
+            answer += '\n\nДетализация заказов:\n'
             for item in config.items:
                 barcode = order['barcode']
                 if item == barcode:
                     ordersDetailed[barcode] += 1
+            for item in ordersDetailed:
+                if ordersDetailed[item] != 0:
+                    answer += config.items[item] + ': ' + str(ordersDetailed[item]) + ' шт.\n'
+
+        print(answer)
+        return answer
     else:
         return data
-
-    answer += '\n\nДетализация заказов:\n'
-
-    for item in ordersDetailed:
-        if ordersDetailed[item] != 0:
-            answer += config.items[item] + ': ' + str(ordersDetailed[item]) + ' шт.\n'
-
-    print(answer)
-    return answer
 
 
 # def printJson():
